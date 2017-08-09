@@ -1,6 +1,7 @@
 package com.example.kasiopec.tshirtapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ListView tShirtListView;
+    List<TshirtModel> tShirtModelList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,22 @@ public class MainActivity extends AppCompatActivity {
         new JSONTask().execute("http://mock-shirt-backend.getsandbox.com/shirts");
 
         tShirtListView = (ListView) findViewById(R.id.tShirtListView);
+        tShirtListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getBaseContext(), TshirtDetails.class);
+                intent.putExtra("name", tShirtModelList.get(i).getName());
+                intent.putExtra("colour", tShirtModelList.get(i).getColour());
+                intent.putExtra("size", tShirtModelList.get(i).getSize());
+                intent.putExtra("price", tShirtModelList.get(i).getPrice());
+                intent.putExtra("picture", tShirtModelList.get(i).getPicture());
+
+                startActivity(intent);
+            }
+
+        });
+
+
 
 
     }
@@ -74,10 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 String jsonString = buffer.toString();
                 JSONArray parentArray = new JSONArray(jsonString);
 
-                List<TshirtModel> tShirtModelList = new ArrayList<>();
 
-
-                StringBuffer tShirtListString = new StringBuffer();
 
                 for (int i = 0; i < parentArray.length(); i++) {
 
