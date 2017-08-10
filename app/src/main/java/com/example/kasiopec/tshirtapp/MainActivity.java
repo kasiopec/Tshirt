@@ -4,17 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.kasiopec.tshirtapp.models.TshirtModel;
@@ -27,18 +32,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private ListView tShirtListView;
     List<TshirtModel> tShirtModelList = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +57,68 @@ public class MainActivity extends AppCompatActivity {
         tShirtListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getBaseContext(), TshirtDetails.class);
-                intent.putExtra("name", tShirtModelList.get(i).getName());
-                intent.putExtra("colour", tShirtModelList.get(i).getColour());
-                intent.putExtra("size", tShirtModelList.get(i).getSize());
-                intent.putExtra("price", tShirtModelList.get(i).getPrice());
-                intent.putExtra("picture", tShirtModelList.get(i).getPicture());
 
+                Intent intent = new Intent(getBaseContext(), TshirtDetails.class);
+                intent.putExtra("selectedTshirtObj", (Serializable) tShirtListView.getAdapter().getItem(i));
                 startActivity(intent);
             }
 
         });
+
+        EditText sizeText = (EditText) findViewById(R.id.editT_size);
+        EditText colourText = (EditText) findViewById(R.id.editText_colour);
+
+        sizeText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (i == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    List<TshirtModel> sizeFiltredTshirts = tShirtModelList.stream().filter(p -> p.getSize().equals(sizeText.getText().toString())).
+                            collect(Collectors.toList());
+                    TshirAdapter adapter;
+
+                    if(sizeText.getText().toString().equals("")){
+                        adapter = new TshirAdapter(getApplicationContext(), R.layout.tshirt_list_layout, tShirtModelList);
+
+                    }else{
+                        adapter = new TshirAdapter(getApplicationContext(), R.layout.tshirt_list_layout, sizeFiltredTshirts);
+
+                    }
+
+                    tShirtListView.setAdapter(adapter);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        colourText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (i == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    List<TshirtModel> colourFiltredTshirts = tShirtModelList.stream().filter(p -> p.getColour().equals(colourText.getText().toString())).
+                            collect(Collectors.toList());
+                    TshirAdapter adapter;
+
+                    if(colourText.getText().toString().equals("")){
+                        adapter = new TshirAdapter(getApplicationContext(), R.layout.tshirt_list_layout, tShirtModelList);
+
+                    }else{
+                        adapter = new TshirAdapter(getApplicationContext(), R.layout.tshirt_list_layout, colourFiltredTshirts);
+
+                    }
+
+                    tShirtListView.setAdapter(adapter);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
 
 
 
@@ -165,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
 
         public TshirAdapter(@NonNull Context context, @LayoutRes int resource, List<TshirtModel> objects) {
             super(context, resource, objects);
+
             tshirtModelList= objects;
             this.resource = resource;
             inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);

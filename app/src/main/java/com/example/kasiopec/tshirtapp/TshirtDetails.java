@@ -9,6 +9,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kasiopec.tshirtapp.models.TshirtModel;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -37,15 +39,14 @@ public class TshirtDetails extends AppCompatActivity {
         quantity = (TextView) findViewById(R.id.textView_quant_details);
         tImage = (ImageView) findViewById(R.id.tshirtImage);
 
-        Bundle extras = getIntent().getExtras();
+        TshirtModel tShirt = (TshirtModel) getIntent().getSerializableExtra("selectedTshirtObj");
 
-        Integer priceValue = extras.getInt("price");
-        String sizeValue = extras.getString("size");
-        String colourValue = extras.getString("colour");
-        String nameValue = extras.getString("name");
-        Integer quantityValue = extras.getInt("quantity");
-        String pictureValue = extras.getString("picture");
-
+        Integer priceValue = tShirt.getPrice();
+        String sizeValue = tShirt.getSize();
+        String colourValue = tShirt.getColour();
+        String nameValue = tShirt.getName();
+        Integer quantityValue = tShirt.getQuantity();
+        String pictureValue = tShirt.getPicture();
 
         name.setText(nameValue);
         price.setText("Price: "+String.valueOf(priceValue));

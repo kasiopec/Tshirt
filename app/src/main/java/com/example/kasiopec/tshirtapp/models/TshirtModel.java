@@ -1,10 +1,12 @@
 package com.example.kasiopec.tshirtapp.models;
 
+import java.io.Serializable;
+
 /**
  * Created by kasiopec on 8/9/2017.
  */
 
-public class TshirtModel {
+public class TshirtModel implements Serializable {
 
     private int id;
     private int price;

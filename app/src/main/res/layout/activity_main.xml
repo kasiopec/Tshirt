@@ -6,32 +6,68 @@
     android:layout_height="match_parent"
     tools:context="com.example.kasiopec.tshirtapp.MainActivity">
 
-    <Button
-        android:id="@+id/button6"
+    <TextView
+        android:id="@+id/textView_colourF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Colour Filter"
+        tools:text="Colour Filter"
+        android:layout_marginBottom="7dp"
+        app:layout_constraintBottom_toTopOf="@+id/editText_colour"
+        android:layout_marginRight="10dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_colour"
+        android:layout_width="156dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="10dp"
+        android:ems="10"
+        android:hint="Put your colour here"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <View
+        android:layout_width="368dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        tools:layout_editor_absoluteX="8dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintTop_toBottomOf="@+id/tShirtListView"
+        android:id="@+id/view" />
+
+    <EditText
+        android:id="@+id/editT_size"
+        android:layout_width="156dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:hint="Put your size here"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="0dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent" />
+        tools:layout_editor_absoluteY="465dp" />
+
+    <TextView
+        android:id="@+id/textView_sizeFIlter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Size filter"
+        tools:layout_editor_absoluteX="8dp"
+        tools:text="Size Filter"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/editT_size" />
 
     <ListView
         android:id="@+id/tShirtListView"
-        android:layout_width="368dp"
-        android:layout_height="440dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="366dp"
+        android:layout_height="417dp"
+        android:layout_marginLeft="9dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="-96dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="-1dp"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
 </android.support.constraint.ConstraintLayout>

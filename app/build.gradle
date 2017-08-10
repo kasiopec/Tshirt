@@ -5,11 +5,19 @@ android {
     buildToolsVersion "25.0.1"
     defaultConfig {
         applicationId "com.example.kasiopec.tshirtapp"
-        minSdkVersion 15
+        minSdkVersion 24
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        jackOptions {
+            enabled true
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+
     }
     buildTypes {
         release {

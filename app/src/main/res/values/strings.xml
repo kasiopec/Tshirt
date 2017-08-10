@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TshirtApp</string>
+
+    <string-array name="size_options">
+        <item name = "M">M - Middle</item>
+        <item name = "L">L - Large</item>
+    </string-array>
 </resources>
