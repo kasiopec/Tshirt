@@ -10,7 +10,6 @@ import java.io.Serializable;
  */
 
 public class TshirtModel implements Serializable {
-
     private int id;
     private int price;
     private String picture;
@@ -75,22 +74,4 @@ public class TshirtModel implements Serializable {
         this.quantity = quantity;
     }
 
-    public String toJSONObj() {
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("id", getId());
-            jsonObject.put("name", getName());
-            jsonObject.put("price", getPrice());
-            jsonObject.put("size", getSize());
-            jsonObject.put("colour", getColour());
-
-
-            return jsonObject.toString();
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return "";
-        }
-    }
 }

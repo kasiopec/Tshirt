@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
+
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,9 +17,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+
 import android.widget.ListView;
-import android.widget.Spinner;
+
 import android.widget.TextView;
 
 import com.example.kasiopec.tshirtapp.models.TshirtModel;
@@ -51,8 +51,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Loading data in async task to avoid UI freeze
         new JSONTask().execute("http://mock-shirt-backend.getsandbox.com/shirts");
 
+        //Defining listview + on click listener to go for Tshirt details screen
         tShirtListView = (ListView) findViewById(R.id.tShirtListView);
         tShirtListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        //Button that redirects to the My cart screen
         Button bCart = (Button) findViewById(R.id.button_cart);
         bCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
+        //Edit text to filter out Tshirts based on size
         EditText sizeText = (EditText) findViewById(R.id.editT_size);
         EditText colourText = (EditText) findViewById(R.id.editText_colour);
 
@@ -84,11 +87,13 @@ public class MainActivity extends AppCompatActivity {
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
                         (i == KeyEvent.KEYCODE_ENTER)) {
-                    // Perform action on key press
+
+                    //Creating new arraylist for adapter via lambda expression
                     List<TshirtModel> sizeFiltredTshirts = tShirtModelList.stream().filter(p -> p.getSize().equals(sizeText.getText().toString())).
                             collect(Collectors.toList());
-                    TshirAdapter adapter;
 
+                    TshirAdapter adapter;
+                    //Use default array list in case there was no input otherwise apply filter
                     if(sizeText.getText().toString().equals("")){
                         adapter = new TshirAdapter(getApplicationContext(), R.layout.tshirt_list_layout, tShirtModelList);
 
@@ -103,17 +108,20 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
+        //Edit text to filter out Tshirts based on colour
         colourText.setOnKeyListener(new View.OnKeyListener() {
+            //adding enter click to the edittext
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
                         (i == KeyEvent.KEYCODE_ENTER)) {
-                    // Perform action on key press
+
+                    //Creating new arraylist for adapter via lambda expression
                     List<TshirtModel> colourFiltredTshirts = tShirtModelList.stream().filter(p -> p.getColour().equals(colourText.getText().toString())).
                             collect(Collectors.toList());
                     TshirAdapter adapter;
 
+                    //Use default array list in case there was no input otherwise apply filter
                     if(colourText.getText().toString().equals("")){
                         adapter = new TshirAdapter(getApplicationContext(), R.layout.tshirt_list_layout, tShirtModelList);
 
@@ -163,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONArray parentArray = new JSONArray(jsonString);
 
 
-
+                //converting json object into arraylist for listview
                 for (int i = 0; i < parentArray.length(); i++) {
 
                     JSONObject jasonTshirtObj = parentArray.getJSONObject(i);
@@ -217,14 +225,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<TshirtModel> s) {
             super.onPostExecute(s);
-            //ListView add here
 
             TshirAdapter adapter = new TshirAdapter(getApplicationContext(), R.layout.tshirt_list_layout, s);
-
             tShirtListView.setAdapter(adapter);
         }
     }
 
+
+    //custom adapter for the listview
     public class TshirAdapter extends ArrayAdapter{
 
         private final LayoutInflater inflater;

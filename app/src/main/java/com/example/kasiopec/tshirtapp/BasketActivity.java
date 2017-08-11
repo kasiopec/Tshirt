@@ -10,21 +10,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.kasiopec.tshirtapp.models.BasketModel;
 import com.example.kasiopec.tshirtapp.models.TshirtModel;
 
-import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.io.Serializable;
 import java.util.List;
 
 public class BasketActivity extends AppCompatActivity {
@@ -39,8 +35,10 @@ public class BasketActivity extends AppCompatActivity {
         BasketModel basket = new BasketModel();
         List<TshirtModel> tList = basket.getBasketList();
 
-
+        //Listview for the ordered stuff
         ListView basketList = (ListView) findViewById(R.id.listViewBasket);
+
+        //Remove items from the listview on item click
         basketList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -48,6 +46,8 @@ public class BasketActivity extends AppCompatActivity {
                 restartActivity();
             }
         });
+
+        //Total price of the cart
         TextView totalPrice = (TextView) findViewById(R.id.textView_totalP);
         totalPrice.setText("Total price: "+String.valueOf(basket.countTotalPrice()));
 
@@ -55,25 +55,17 @@ public class BasketActivity extends AppCompatActivity {
         makeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                // HERE GOES JSON POST TO THE SERVER
             }
         });
-
+        // dumb check to avoid nullpointer if there is no items
         if(tList !=  null){
             adapter = new TshirAdapter(getApplicationContext(), R.layout.tshirt_list_layout, tList);
             basketList.setAdapter(adapter);
         }
-
-
-        if(basket.getBasketList()!= null){
-            System.out.println("Here is what in the basket: "+basket.getBasketList());
-
-        }
-
-
-
     }
 
+    //Cart activity update after item was deleted(BRUTE FORCE WAY)
     public void restartActivity(){
         Intent mIntent = getIntent();
         finish();
@@ -83,7 +75,7 @@ public class BasketActivity extends AppCompatActivity {
 
 
 
-
+    //Adapter for the cart items same as in MainActivity
     public class TshirAdapter extends ArrayAdapter{
 
         private final LayoutInflater inflater;

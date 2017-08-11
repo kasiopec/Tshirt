@@ -79,14 +79,15 @@
 
     <Button
         android:id="@+id/button_cart"
-        android:layout_width="71dp"
-        android:layout_height="37dp"
+        android:layout_width="118dp"
+        android:layout_height="36dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:text="My Cart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tShirtListView"
-        app:layout_constraintVertical_bias="0.073"
-        tools:layout_editor_absoluteX="157dp" />
+        app:layout_constraintVertical_bias="0.095"
+        android:layout_marginRight="133dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

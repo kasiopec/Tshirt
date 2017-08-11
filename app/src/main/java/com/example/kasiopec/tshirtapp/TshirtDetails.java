@@ -85,7 +85,7 @@ public class TshirtDetails extends AppCompatActivity {
 
 
     }
-
+    //Loading image from the URL that was in the JSON file, in the async task, to avoid UI freezes
     public class ImageLoadTask extends AsyncTask<Void, Void, Bitmap> {
 
         private String url;

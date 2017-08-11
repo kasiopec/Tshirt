@@ -1,11 +1,5 @@
 package com.example.kasiopec.tshirtapp.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +10,6 @@ import java.util.List;
 
 public class BasketModel implements Serializable{
 
-    private int totalPrice;
     private static List<TshirtModel> basketList;
 
 
