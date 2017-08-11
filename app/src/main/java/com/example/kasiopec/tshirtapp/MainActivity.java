@@ -65,6 +65,17 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        Button bCart = (Button) findViewById(R.id.button_cart);
+        bCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), BasketActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
         EditText sizeText = (EditText) findViewById(R.id.editT_size);
         EditText colourText = (EditText) findViewById(R.id.editText_colour);
 

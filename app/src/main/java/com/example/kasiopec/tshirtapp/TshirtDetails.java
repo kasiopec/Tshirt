@@ -6,9 +6,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kasiopec.tshirtapp.models.BasketModel;
 import com.example.kasiopec.tshirtapp.models.TshirtModel;
 
 import java.io.IOException;
@@ -16,13 +19,18 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class TshirtDetails extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tshirt_details);
+
+        final List<TshirtModel> cart = BasketModel.getCart();
 
         TextView name;
         TextView price;
@@ -56,6 +64,18 @@ public class TshirtDetails extends AppCompatActivity {
 
         //load picture on background and assign  to the image view
         new ImageLoadTask(pictureValue, tImage).execute();
+
+        Button addToBasket = (Button) findViewById(R.id.button_addTB);
+
+        addToBasket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cart.add(tShirt);
+                System.out.println("ADDED THIS STUFF: "+tShirt.toString());
+                System.out.println("AND HERE IS WHAT IN THE BASKET NOW:"+cart.contains(tShirt));
+
+            }
+        });
 
 
 

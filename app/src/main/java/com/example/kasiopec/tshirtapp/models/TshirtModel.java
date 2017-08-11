@@ -1,5 +1,8 @@
 package com.example.kasiopec.tshirtapp.models;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -70,5 +73,24 @@ public class TshirtModel implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String toJSONObj() {
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("id", getId());
+            jsonObject.put("name", getName());
+            jsonObject.put("price", getPrice());
+            jsonObject.put("size", getSize());
+            jsonObject.put("colour", getColour());
+
+
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return "";
+        }
     }
 }
